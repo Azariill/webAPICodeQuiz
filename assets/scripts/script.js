@@ -17,3 +17,8 @@ container.addEventListener("click", function(event) {
     console.log(element);
 });
 
+
+var createQuestionEl = function(questionObjArray){
+    var paragraphEl = document.createElement("p");
+    
+}
