@@ -4,18 +4,49 @@ var divOne = document.querySelector(".div1");
 var divTwo = document.querySelector(".div2");
 var question = -1;
 var currentQuestion = [];
+var choice = "";
 
 
-
+var clearFunc = function(){
+        question++;
+        divOne.innerHTML ="";
+        divTwo.innerHTML ="";
+        questionPicker();
+}
 
 
 var startEvent = function(){
 
+
         question++;
         divOne.innerHTML ="";
         divTwo.innerHTML ="";
-        debugger;
-        questionPicker();
+        var timeRemainingEl = document.querySelector(".time-remaining");
+    var startTimer = setInterval(function(){
+        if(timer === 80){
+            timeRemainingEl.innerHTML = "Time Remaining: " + timer;
+            timer--;
+            questionPicker();
+        }
+        else if( timer <= 79){
+            timeRemainingEl.innerHTML = "Time Remaining: " + timer;
+            timer--;
+            
+
+        }
+        else if(timer === 0){
+            clearInterval(startTimer);
+        }
+   
+
+    },
+    
+    
+    1000);
+
+
+
+    
 
 
 
@@ -23,14 +54,14 @@ var startEvent = function(){
 }
 
 
+
+
 var createQuestionEl = function(currentQuestion){
     
     var paragraphEl = document.createElement("p");
+    paragraphEl.className = "question-p"
     paragraphEl.innerHTML = currentQuestion.paragraph;
     divOne.appendChild(paragraphEl);
-
-    var buttonArray = ["answerOne", "answerTwo", "answerThree", "answerFour"];
-    
 
         var buttonEl = document.createElement("button");
         buttonEl.className = "question-button";
@@ -61,20 +92,27 @@ var createQuestionEl = function(currentQuestion){
     var questionPicker = function(){
 
         var questionOne = {    paragraph:"Commonly used data types DO Not include: ",
-            answerOne: "1. strings",
-            answerTwo: "2. booleans",
-            answerThree:"3. alerts",
-            answerFour:"4. integers"};
+            answerOne: "1. Strings",
+            answerTwo: "2. Booleans",
+            answerThree:"3. Alerts",
+            answerFour:"4. Integers"};
 
         var questionTwo = {
-            paragraph:"Arrays in Javascript can be used to store _____? ",
-            answerOne: "1. numbers and strings",
-            answerTwo: "2. other arrays",
-            answerThree: "3. booleans",
+            paragraph:"Arrays in Javascript can be used to store _____? : ",
+            answerOne: "1. Numbers and strings",
+            answerTwo: "2. Other arrays",
+            answerThree: "3. Booleans",
             answerFour: "4. All of the above"};
 
+        var questionThree =  {
+            paragraph:"How would you write 'Hello World' in an alert box:",
+            answerOne:"1. msg('Hello World');",
+            answerTwo:"2. msgBox('Hello World');",
+            answerThree:"3. alertBox('Hello World');",
+            answerFour:"4. alert('Hello World');"};
 
-        currentQuestion = [questionOne, questionTwo];
+
+        currentQuestion = [questionOne, questionTwo, questionThree];
         currentQuestion = currentQuestion[question];
         
 
@@ -103,22 +141,62 @@ var createQuestionEl = function(currentQuestion){
         }
     });
 
+var rightOrWrong = function(){
+    
+    var section = document.querySelector(".main-flex");
+    var divEl = document.createElement("div");
+    divEl.className = "div3";
+    section.appendChild(divEl);
+
+    var divElTwo = document.createElement("div");
+    divElTwo.className = "div4";
+    divEl.appendChild(divElTwo);
+
+    var pEl = document.createElement("p");
+    pEl.className = "temp-p";
+    pEl.innerHTML = choice;
+    divElTwo.appendChild(pEl);
+
+    // var divThree = document.querySelector(".div3");
+    // divThree.remove();
+    // var divFour = document.querySelector(".div4");
+    // divFour.remove();
+    // var divP = document.querySelector(".temp-p");
+    // divP.remove();
+
+
+
+
+
+
+
+
+}
     var answerSheet = function(element){
         
 
       switch(element.innerHTML){
-          case "3. alerts" : 
-            alert("correct");
-            startEvent();
+          case "3. Alerts" : 
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
             break;
           case "4. All of the above":
-              alert("correct");
-              startEvent();
-              break;
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
+            break;
+          case "4. alert('Hello World');":
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
+            break;
           default:
-              alert("wrong");
-              startEvent();
-              break;
+            choice = "Wrong! ";
+            rightOrWrong();
+            timer -= 10;
+            clearFunc();
+            break;
 
 
       }    

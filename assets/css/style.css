@@ -19,7 +19,7 @@
 }
 
 .main-flex p{
-    font-size: 30px;
+    
     margin-bottom: 15px;
     
 }
@@ -51,10 +51,47 @@ button:hover{
     border: 2px solid purple;
 }
 
+.question-button{
+    width: 290px;
+}
+
+.start-button{
+    width: 200px;
+    text-align: center;
+}
+
 .time-remaining{
     width: 100%;
     margin-left: -50px;
     margin-top: 15px;
     text-align: end;
     font-size: 22px;
+}
+
+.question-p{
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+
+.start-p{
+    font-size: 32px;
+
+}
+
+.div3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div4{
+    width: 55%;
+    border-top: 3px solid #0000005c;
+   
+}
+
+.div4 p{
+    font-size: 50px;
+    
 }
