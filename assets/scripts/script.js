@@ -7,11 +7,12 @@ var currentQuestion = [];
 var choice = "";
 
 
-var clearFunc = function(){
+
+var clearFunc = function(){    
         question++;
         divOne.innerHTML ="";
         divTwo.innerHTML ="";
-        questionPicker();
+        questionPicker();  
 }
 
 
@@ -21,42 +22,46 @@ var startEvent = function(){
         question++;
         divOne.innerHTML ="";
         divTwo.innerHTML ="";
-        var timeRemainingEl = document.querySelector(".time-remaining");
-    var startTimer = setInterval(function(){
-        if(timer === 80){
-            timeRemainingEl.innerHTML = "Time Remaining: " + timer;
-            timer--;
-            questionPicker();
-        }
-        else if( timer <= 79){
-            timeRemainingEl.innerHTML = "Time Remaining: " + timer;
-            timer--;
-            
+        
+        counter(80);
+}
 
-        }
-        else if(timer === 0){
-            clearInterval(startTimer);
-        }
-   
 
-    },
+var counter = function(timer){
+    var timeRemainingEl = document.querySelector(".time-remaining");
     
-    
-    1000);
+        var startTimer = setInterval(function(){
+            if(timer === 80){
+                timeRemainingEl.innerHTML = "Time Remaining: " + timer;
+                timer--;
+                questionPicker();
+            }
+            else if( timer <= 79){
+                timeRemainingEl.innerHTML = "Time Remaining: " + timer;
+                timer--;
+            }
+            else{
+                   clearInterval(startTimer);
+                }
+        
+        
+        
+        },1000);
 
-
-
-    
-
-
-
-   
+}   
+}
 }
 
 
 
 
+
+
+
+
+
 var createQuestionEl = function(currentQuestion){
+
     
     var paragraphEl = document.createElement("p");
     paragraphEl.className = "question-p"
@@ -111,12 +116,44 @@ var createQuestionEl = function(currentQuestion){
             answerThree:"3. alertBox('Hello World');",
             answerFour:"4. alert('Hello World');"};
 
+        var questionFour =  {
+            paragraph:"How would you write 'Hello World' in an alert box:",
+            answerOne:"1. msg('Hello World');",
+            answerTwo:"2. msgBox('Hello World');",
+            answerThree:"3. alertBox('Hello World');",
+            answerFour:"4. alert('Hello World');"};
 
-        currentQuestion = [questionOne, questionTwo, questionThree];
-        currentQuestion = currentQuestion[question];
+        var questionFive =  {
+            paragraph:"How would you write 'Hello World' in an alert box:",
+            answerOne:"1. msg('Hello World');",
+            answerTwo:"2. msgBox('Hello World');",
+            answerThree:"3. alertBox('Hello World');",
+            answerFour:"4. alert('Hello World');"};
+
+        var questionSix =  {
+            paragraph:"How would you write 'Hello World' in an alert box:",
+            answerOne:"1. msg('Hello World');",
+            answerTwo:"2. msgBox('Hello World');",
+            answerThree:"3. alertBox('Hello World');",
+            answerFour:"4. alert('Hello World');"};
+    
+
         
 
+
+        currentQuestion = [questionOne, questionTwo, questionThree,questionFour,questionFive,questionSix];
+        
+        currentQuestion = currentQuestion[question];
+
+        
+        
+        
+    if(currentQuestion){
         return createQuestionEl(currentQuestion);
+    }
+    else{
+        return scoreScreen();
+    }
 
     }
 
@@ -124,12 +161,6 @@ var createQuestionEl = function(currentQuestion){
         var element = event.target;
         var questionElement = document.querySelector("button");
         var startButton = document.querySelector(".start-button");
-
-        console.log(element.className);
-        console.log(questionElement.className);
-
-
-
         if(element === startButton){
             startEvent();
             element = "";
@@ -139,38 +170,42 @@ var createQuestionEl = function(currentQuestion){
 
 
         }
+        else{
+            return false;
+        }
     });
 
+// functions to test if the choice was right or wrong 
 var rightOrWrong = function(){
+
+    var div3 = document.getElementById("div3Id");
+    if(div3){
+        div3.remove();
+    }
+
+
     
+    // selects the main section 
     var section = document.querySelector(".main-flex");
+    //create a new div element
     var divEl = document.createElement("div");
+    //assign class .div3
     divEl.className = "div3";
+
+    divEl.setAttribute('id','div3Id');
+    //append that new div as the last element
     section.appendChild(divEl);
-
+    // create new div element
     var divElTwo = document.createElement("div");
+    //assign .div4 to it
     divElTwo.className = "div4";
+    //append that to div3
     divEl.appendChild(divElTwo);
-
+    //create new p element and assing choice to it.
     var pEl = document.createElement("p");
     pEl.className = "temp-p";
     pEl.innerHTML = choice;
     divElTwo.appendChild(pEl);
-
-    // var divThree = document.querySelector(".div3");
-    // divThree.remove();
-    // var divFour = document.querySelector(".div4");
-    // divFour.remove();
-    // var divP = document.querySelector(".temp-p");
-    // divP.remove();
-
-
-
-
-
-
-
-
 }
     var answerSheet = function(element){
         
@@ -204,5 +239,47 @@ var rightOrWrong = function(){
 
 
     }
+
+var scoreScreen = function(){
+    debugger;
+    counter(0);
+    var h1El = document.createElement('h1');
+    h1El.textContent = "All done!";
+    divOne.appendChild(h1El);
+
+    var pEl = document.createElement('p');
+    pEl.textContent = "Your final score is 22."
+    divOne.appendChild(pEl);
+
+     // Create a form dynamically
+     var formEl = document.createElement("form");
+     formEl.setAttribute("method", "post");
+     formEl.setAttribute("action", "submit");
+     formEl.innerHTML = "<div class='div6'><label for='initials'>Enter initials: </label></div><div class='div7'><input type='text' name='initials' placeholder='Enter your initials'></input></div><div class='div9'><button type='button' value='submit form' id='submit'>Submit</button>"
+
+     divOne.appendChild(formEl);
+
+     
+
+   
+
+    }
+
+     
+var saveInitials = function(){
+    var intialsIput = document.querySelector("input[name='initials']").value;
+    console.log(intialsIput);
+}
+
+container.addEventListener("submit", saveInitials);
+
+
+  
+   
+
+
+
+
+
 
 
