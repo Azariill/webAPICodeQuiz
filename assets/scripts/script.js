@@ -167,21 +167,24 @@ var createQuestionEl = function(currentQuestion){
         var element = event.target;
         var questionElement = container.querySelector(".question-button");
         var startButton = document.querySelector(".start-button");
-
         
 
-        console.log(element.className);
-        console.log(questionElement);
         if(element === startButton){
             startEvent();
             element = "";
         }
-        else if(element.className === questionElement.className){
+        else if(element.className === "submit"){
+            var intialsIput = container.querySelector("input[name='initials']").value;
+            return saveInitials(intialsIput);
+            
+            
+        }
+        else if(element.className === "question-button"){
             answerSheet(element);
         }
-        else if(element){
-            return;
-        }
+       else{
+           return;
+       }
     });
 
 // functions to test if the choice was right or wrong 
@@ -264,7 +267,7 @@ var scoreScreen = function(){
      var formEl = document.createElement("form");
      formEl.setAttribute("method", "post");
      formEl.setAttribute("action", "submit");
-     formEl.innerHTML = "<div class='div6'><label for='initials'>Enter initials: </label></div><div class='div7'><input type='text' name='initials' placeholder='Enter your initials'></input></div><div class='div9'><button type='button' value='submit form' id='submit'>Submit</button>"
+     formEl.innerHTML = "<div class='div6'><label for='initials'>Enter initials: </label></div><div class='div7'><input type='text' name='initials' placeholder='Enter your initials' class='initials'></input></div><div class='div9'><button type='button' value='submit form' class='submit'>Submit</button>"
 
      divOne.appendChild(formEl);
 
@@ -275,9 +278,12 @@ var scoreScreen = function(){
     }
 
      
-var saveInitials = function(){
-    var intialsIput = document.querySelector("input[name='initials']").value;
-    console.log(intialsIput);
+var saveInitials = function(intialsIput){
+    localStorage.setItem("Name",JSON.stringify(intialsIput));
+    container.querySelector("input[name='initials']").value = "";
+   
+    
+    
 }
 
 container.addEventListener("submit", saveInitials);
