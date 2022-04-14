@@ -286,17 +286,46 @@ var scoreScreen = function(){
      
 var saveInitials = function(intialsIput){
     var highScoreArr = ["1. ", "2. ", "3. ", "4. ", "5. "];
-    var finalScore = score +" - "+ intialsIput;
+    var finalScore = intialsIput +" - "+ score;
     debugger;
- 
-    localStorage.setItem(highScoreArr[0],JSON.stringify(finalScore));
-    container.querySelector("input[name='initials']").value = "";
 
-    var x = localStorage.getItem(highScoreArr[0]);
+    for(var i = 0; i < highScoreArr.length; i++){
+        var current = localStorage.getItem(highScoreArr[i]);
+        var currentArray = current.split(" ");
+        var currentScore = parseInt(currentArray[2]);
     
-    divOne.innerHTML = x;
+        
+            if(currentScore < score){
+            
+                 localStorage.setItem(highScoreArr[i],finalScore);
+                 return highScoreScreen(highScoreArr);
+            }
+         
+ }
+}  
+
    
     
+    
+
+
+var highScoreScreen = function(highScoreArr){
+    
+    divOne.innerHTML = "";
+    var olEl = document.createElement("ol");
+    divOne.appendChild(olEl);
+
+
+    for(var i = 0; i < highScoreArr.length; i++){
+        var current = localStorage.getItem(highScoreArr[i]);
+    
+        var liEL = document.createElement("li");
+        liEL.textContent = current;
+        olEl.appendChild(liEL)
+ 
+
+    }
+
     
 }
 
