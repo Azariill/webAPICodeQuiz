@@ -1,10 +1,12 @@
 var container = document.querySelector(".main-flex");
-var timer = 80;
 var divOne = document.querySelector(".div1");
 var divTwo = document.querySelector(".div2");
 var question = -1;
 var currentQuestion = [];
 var choice = "";
+var timerStart = true;
+var score = "";
+var timer = 0;
 
 
 
@@ -23,34 +25,38 @@ var startEvent = function(){
         divOne.innerHTML ="";
         divTwo.innerHTML ="";
         
-        counter(80);
+        counter();
 }
 
 
-var counter = function(timer){
+var counter = function(){
     var timeRemainingEl = document.querySelector(".time-remaining");
+    timer = 80;
     
         var startTimer = setInterval(function(){
-            if(timer === 80){
+            if(timer === 80 & timerStart){
                 timeRemainingEl.innerHTML = "Time Remaining: " + timer;
                 timer--;
                 questionPicker();
             }
-            else if( timer <= 79){
+            else if( timer <= 79 & timerStart){
                 timeRemainingEl.innerHTML = "Time Remaining: " + timer;
                 timer--;
             }
             else{
-                   clearInterval(startTimer);
-                }
+                    clearInterval(startTimer);
+                    score = timer;
+                    timer = 0;
+                    
+            }
+        }
         
-        
-        
-        },1000);
+        , 1000);
 
-}   
-}
-}
+        }
+
+
+
 
 
 
@@ -167,8 +173,6 @@ var createQuestionEl = function(currentQuestion){
         }
         else if(element.className === questionElement.className){
             answerSheet(element);
-
-
         }
         else{
             return false;
@@ -242,7 +246,7 @@ var rightOrWrong = function(){
 
 var scoreScreen = function(){
     debugger;
-    counter(0);
+    timerStart = false;
     var h1El = document.createElement('h1');
     h1El.textContent = "All done!";
     divOne.appendChild(h1El);
