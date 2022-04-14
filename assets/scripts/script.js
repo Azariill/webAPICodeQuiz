@@ -1,12 +1,13 @@
 var container = document.querySelector(".main-flex");
 var divOne = document.querySelector(".div1");
 var divTwo = document.querySelector(".div2");
+var timeRemainingEl = document.querySelector(".time-remaining");
 var question = -1;
 var currentQuestion = [];
 var choice = "";
 var timerStart = true;
-var score = "";
-var timer = 0;
+var score = 0;
+var timer = 80;
 
 
 
@@ -30,23 +31,26 @@ var startEvent = function(){
 
 
 var counter = function(){
-    var timeRemainingEl = document.querySelector(".time-remaining");
-    timer = 80;
+    
+    
+    
     
         var startTimer = setInterval(function(){
             if(timer === 80 & timerStart){
                 timeRemainingEl.innerHTML = "Time Remaining: " + timer;
                 timer--;
+                score = timer;
                 questionPicker();
             }
             else if( timer <= 79 & timerStart){
                 timeRemainingEl.innerHTML = "Time Remaining: " + timer;
                 timer--;
+                score = timer;
             }
             else{
                     clearInterval(startTimer);
                     score = timer;
-                    timer = 0;
+                    
                     
             }
         }
@@ -254,14 +258,16 @@ var rightOrWrong = function(){
 
 var scoreScreen = function(){
     debugger;
+
     timerStart = false;
     var h1El = document.createElement('h1');
     h1El.textContent = "All done!";
     divOne.appendChild(h1El);
-
+    console.log(score);
     var pEl = document.createElement('p');
-    pEl.textContent = "Your final score is 22."
+    pEl.textContent = "Your final score is " + score;
     divOne.appendChild(pEl);
+    timeRemainingEl.innerHTML = "Time Remaining: " + score;
 
      // Create a form dynamically
      var formEl = document.createElement("form");
@@ -279,14 +285,15 @@ var scoreScreen = function(){
 
      
 var saveInitials = function(intialsIput){
-    localStorage.setItem("Name",JSON.stringify(intialsIput));
+    var finalScore = intialsIput + " - " +score;
+    localStorage.setItem("Name",JSON.stringify(finalScore));
     container.querySelector("input[name='initials']").value = "";
    
     
     
 }
 
-container.addEventListener("submit", saveInitials);
+
 
 
   
