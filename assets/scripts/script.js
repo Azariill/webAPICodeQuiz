@@ -165,8 +165,13 @@ var createQuestionEl = function(currentQuestion){
 
     container.addEventListener("click", function() {
         var element = event.target;
-        var questionElement = document.querySelector("button");
+        var questionElement = container.querySelector(".question-button");
         var startButton = document.querySelector(".start-button");
+
+        
+
+        console.log(element.className);
+        console.log(questionElement);
         if(element === startButton){
             startEvent();
             element = "";
@@ -174,8 +179,8 @@ var createQuestionEl = function(currentQuestion){
         else if(element.className === questionElement.className){
             answerSheet(element);
         }
-        else{
-            return false;
+        else if(element){
+            return;
         }
     });
 
@@ -280,7 +285,6 @@ container.addEventListener("submit", saveInitials);
 
   
    
-
 
 
 
