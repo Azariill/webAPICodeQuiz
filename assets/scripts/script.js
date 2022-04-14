@@ -285,9 +285,16 @@ var scoreScreen = function(){
 
      
 var saveInitials = function(intialsIput){
-    var finalScore = intialsIput + " - " +score;
-    localStorage.setItem("Name",JSON.stringify(finalScore));
+    var highScoreArr = ["1. ", "2. ", "3. ", "4. ", "5. "];
+    var finalScore = score +" - "+ intialsIput;
+    debugger;
+ 
+    localStorage.setItem(highScoreArr[0],JSON.stringify(finalScore));
     container.querySelector("input[name='initials']").value = "";
+
+    var x = localStorage.getItem(highScoreArr[0]);
+    
+    divOne.innerHTML = x;
    
     
     
