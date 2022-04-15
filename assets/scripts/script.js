@@ -2,12 +2,15 @@ var container = document.querySelector(".main-flex");
 var divOne = document.querySelector(".div1");
 var divTwo = document.querySelector(".div2");
 var timeRemainingEl = document.querySelector(".time-remaining");
+var body = document.querySelector("body");
 var question = -1;
 var currentQuestion = [];
 var choice = "";
 var timerStart = true;
 var score = 0;
 var timer = 80;
+var e = 0;
+
 
 
 
@@ -127,31 +130,31 @@ var createQuestionEl = function(currentQuestion){
             answerFour:"4. alert('Hello World');"};
 
         var questionFour =  {
-            paragraph:"How would you write 'Hello World' in an alert box:",
-            answerOne:"1. msg('Hello World');",
-            answerTwo:"2. msgBox('Hello World');",
-            answerThree:"3. alertBox('Hello World');",
-            answerFour:"4. alert('Hello World');"};
+            paragraph:"Inside which HTML element do we put the Javascript?:",
+            answerOne:"1. js",
+            answerTwo:"2. script",
+            answerThree:"3. javascript",
+            answerFour:"4. scripting"};
 
         var questionFive =  {
-            paragraph:"How would you write 'Hello World' in an alert box:",
-            answerOne:"1. msg('Hello World');",
-            answerTwo:"2. msgBox('Hello World');",
-            answerThree:"3. alertBox('Hello World');",
-            answerFour:"4. alert('Hello World');"};
+            paragraph:"How do you write an if statment in Javascript?",
+            answerOne:"1. if i==5 then",
+            answerTwo:"2. if i=5 then",
+            answerThree:"3. if(i == 5){}",
+            answerFour:"4. if i=5(){}"};
 
         var questionSix =  {
-            paragraph:"How would you write 'Hello World' in an alert box:",
-            answerOne:"1. msg('Hello World');",
-            answerTwo:"2. msgBox('Hello World');",
-            answerThree:"3. alertBox('Hello World');",
-            answerFour:"4. alert('Hello World');"};
+            paragraph:"How can you add a single comment in JavaScript?",
+            answerOne:"1. !-- This is a comment --!",
+            answerTwo:"2. 'this is a comment' ",
+            answerThree:"3. //this is a comment",
+            answerFour:"4. /* this is a comment */ "};
     
 
         
 
 
-        currentQuestion = [questionOne, questionTwo, questionThree,questionFour,questionFive,questionSix];
+        currentQuestion = [questionOne, questionTwo, questionThree, questionFour, questionFive,questionSix];
         
         currentQuestion = currentQuestion[question];
 
@@ -167,10 +170,11 @@ var createQuestionEl = function(currentQuestion){
 
     }
 
-    container.addEventListener("click", function() {
+    body.addEventListener("click", function() {
         var element = event.target;
-        var questionElement = container.querySelector(".question-button");
         var startButton = document.querySelector(".start-button");
+        
+        
         
 
         if(element === startButton){
@@ -185,6 +189,11 @@ var createQuestionEl = function(currentQuestion){
         }
         else if(element.className === "question-button"){
             answerSheet(element);
+        }
+        else if(element.className === "high-score-span"){
+            intialsInput = "empty";
+            saveInitials(intialsIput);
+
         }
        else{
            return;
@@ -242,6 +251,21 @@ var rightOrWrong = function(){
             rightOrWrong();
             clearFunc();
             break;
+          case "2. script":
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
+            break;
+          case "3. if(i == 5){}":
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
+            break;
+        case "3. //this is a comment":
+            choice = "Correct!";
+            rightOrWrong();
+            clearFunc();
+            break;
           default:
             choice = "Wrong! ";
             rightOrWrong();
@@ -257,13 +281,13 @@ var rightOrWrong = function(){
     }
 
 var scoreScreen = function(){
-    debugger;
+    
 
     timerStart = false;
     var h1El = document.createElement('h1');
     h1El.textContent = "All done!";
     divOne.appendChild(h1El);
-    console.log(score);
+    
     var pEl = document.createElement('p');
     pEl.textContent = "Your final score is " + score;
     divOne.appendChild(pEl);
@@ -286,22 +310,53 @@ var scoreScreen = function(){
      
 var saveInitials = function(intialsIput){
     var highScoreArr = ["1. ", "2. ", "3. ", "4. ", "5. "];
-    var finalScore = intialsIput +" - "+ score;
+    var current = localStorage.getItem(highScoreArr[0]);
     debugger;
-
-    for(var i = 0; i < highScoreArr.length; i++){
-        var current = localStorage.getItem(highScoreArr[i]);
-        var currentArray = current.split(" ");
-        var currentScore = parseInt(currentArray[2]);
+    var finalScore = {
+        name:intialsIput, 
+        playerScore:score
+    };
+    timeRemainingEl.innerHTML = "Time Remaining: " + score;
     
+    
+
+if(current && finalScore.name ){
+    while( e < highScoreArr.length){
         
-            if(currentScore < score){
+       
+        current = localStorage.getItem(highScoreArr[e]);
+        var playerObj = JSON.parse(current);
+        
+
+        if(playerObj){
+            var playerScore = playerObj.playerScore;
             
-                 localStorage.setItem(highScoreArr[i],finalScore);
-                 return highScoreScreen(highScoreArr);
+            if(playerScore < score){
+                localStorage.setItem(highScoreArr[e], JSON.stringify(finalScore));
+                return highScoreScreen(highScoreArr);
             }
-         
- }
+            else{ 
+            e ++;
+            return saveInitials(intialsIput);}
+        }
+    
+       else{
+        localStorage.setItem(highScoreArr[e], JSON.stringify(finalScore));
+        return highScoreScreen(highScoreArr);
+
+
+       }
+    }
+}
+
+else if(finalScore.name){
+    localStorage.setItem(highScoreArr[e], JSON.stringify(finalScore));
+    return highScoreScreen(highScoreArr);
+}
+
+else{
+    divTwo.innerHTML =" ";
+    return highScoreScreen(highScoreArr);}
 }  
 
    
@@ -311,23 +366,37 @@ var saveInitials = function(intialsIput){
 
 var highScoreScreen = function(highScoreArr){
     
-    divOne.innerHTML = "";
+    divOne.innerHTML = "<h1 class='highscore'> High Scores:</h1>";
     var olEl = document.createElement("ol");
     divOne.appendChild(olEl);
-
-
+    var div4EL = document.getElementsByClassName("div4");
+    
+    
+    if(div4EL.length > 0){
+        div4EL = div4EL[0];
+        div4EL.remove();
+    }
+    
     for(var i = 0; i < highScoreArr.length; i++){
         var current = localStorage.getItem(highScoreArr[i]);
+        var playerObj = JSON.parse(current);
+        
     
+    if(playerObj){
+        var playerName = playerObj.name;
+        var playerScore = playerObj.playerScore;
         var liEL = document.createElement("li");
-        liEL.textContent = current;
+        liEL.textContent = playerName +" - "+playerScore;
         olEl.appendChild(liEL)
- 
+    }
+    else{return;}
 
     }
 
     
 }
+
+
 
 
 

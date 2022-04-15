@@ -159,3 +159,39 @@ form{
      background-color: #c375f4;
         border: 2px solid purple;
 }
+
+ol{
+    
+    width: 200px;
+    margin-left: 40%;
+    
+}
+
+li{
+  padding: 10px;
+  padding-top: 15px;
+  font-size: 28px;
+  font-weight: bolder;
+  color: red;
+  
+}
+
+.high-score span{
+  position:absolute;
+  color: purple;
+  left: 5%;
+  top: 5%;
+  font-weight: bolder;
+  font-size: 32px;
+}
+
+.high-score span:hover{
+  color: #eaafea;
+  cursor:pointer;
+}
+.highscore{
+  color: purple;
+  margin-right: 150px;
+  text-decoration: underline;
+  
+}
