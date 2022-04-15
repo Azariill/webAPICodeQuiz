@@ -45,17 +45,23 @@ var counter = function(){
                 score = timer;
                 questionPicker();
             }
-            else if( timer <= 79 & timerStart){
+            else if( timer > 0 &  timerStart){
                 timeRemainingEl.innerHTML = "Time Remaining: " + timer;
                 timer--;
                 score = timer;
             }
             else{
-                    clearInterval(startTimer);
-                    score = timer;
+
+                timeRemainingEl.innerHTML = "Time Remaining: " + timer;
+                clearInterval(startTimer);
+                score = timer;
+                timerStart = false;
+                divTwo.innerHTML = " ";
+                return scoreScreen();
                     
                     
             }
+        
         }
         
         , 1000);
@@ -106,6 +112,8 @@ var createQuestionEl = function(currentQuestion){
 
 
     }
+
+
 
     var questionPicker = function(){
 
@@ -159,13 +167,17 @@ var createQuestionEl = function(currentQuestion){
         currentQuestion = currentQuestion[question];
 
         
+
+        
         
         
     if(currentQuestion){
         return createQuestionEl(currentQuestion);
     }
     else{
-        return scoreScreen();
+        timerStart = false;
+        return counter();
+
     }
 
     }
@@ -281,6 +293,7 @@ var rightOrWrong = function(){
     }
 
 var scoreScreen = function(){
+    divOne.innerHTML ="";
     
 
     timerStart = false;
@@ -311,7 +324,7 @@ var scoreScreen = function(){
 var saveInitials = function(intialsIput){
     var highScoreArr = ["1. ", "2. ", "3. ", "4. ", "5. "];
     var current = localStorage.getItem(highScoreArr[0]);
-    debugger;
+   
     var finalScore = {
         name:intialsIput, 
         playerScore:score
