@@ -2,4 +2,7 @@
 
 ## PAGES LINK : https://azariill.github.io/webAPICodeQuiz/
 
-* code 
+# USER STORY
+*I want to take a timed quiz on JavaScript fundamentals and be able to compare high scores.
+# Criteria
+*I am taking a coding quiz.
